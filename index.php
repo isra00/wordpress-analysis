@@ -194,7 +194,7 @@ while ($row = mysql_fetch_assoc($res))
 
 <header class="page-header">
   <h1>Análisis de posts</h1>
-  <p>Los datos se actualizan cada <?php echo TTL / 60 ?> minutos. Algunos datos de FB share en posts anteriores a abril de 2013 se pueden haber perdido debido al cambio en la página.</p>
+  <p>Los datos se actualizan cada <?php echo TTL / 60 ?> minutos.</p>
   <p>Solo se procesan los tuits creados en los últimos 7 días (<a href="https://dev.twitter.com/docs/using-search" target="_blank">más info</a>)</p>
 </header>
 
