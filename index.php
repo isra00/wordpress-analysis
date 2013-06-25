@@ -203,7 +203,7 @@ while ($row = mysql_fetch_assoc($res))
   <tbody>
 <?php foreach ($posts as $p) : ?>
     <tr>
-    <td><a href="http://jmjrio2013.info/<?php echo $p['post_name'] ?>"><?php echo utf8_encode($p['post_title']) ?></a></a></td>
+    <td><a href="<?php echo WORDPRESS_HOME ?><?php echo $p['post_name'] ?>"><?php echo utf8_encode($p['post_title']) ?></a></a></td>
     <td>
       <span class="meter-value"><?php echo intval($p['pageviews']) ?></span>
       <meter min="0" max="<?php echo $pageviews_max ?>" value="<?php echo intval($p['pageviews']) ?>"></meter>
