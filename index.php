@@ -38,8 +38,8 @@ $ga = new gapi(GA_EMAIL, GA_PASSWORD);
 
 require_once('TwitterAPIExchange.php');
 $twitter = new TwitterAPIExchange(array(
-  'oauth_access_token'		=> TWITTER_ACCESS_TOKEN,
-	'oauth_access_token_secret' => TWITTER_ACCESS_TOKEN_SECRET,
+	'oauth_access_token'		=> TWITTER_ACCESS_TOKEN,
+	'oauth_access_token_secret'	=> TWITTER_ACCESS_TOKEN_SECRET,
 	'consumer_key'				=> TWITTER_CONSUMER_KEY,
 	'consumer_secret'			=> TWITTER_CONSUMER_SECRET
 ));
