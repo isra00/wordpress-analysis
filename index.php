@@ -76,7 +76,10 @@ function cached_gapi_pageviews_page($page)
 	$key = "post_analysis_ga_$page";
 	if (!($val = apc_fetch($key)))
 	{
-		// IMPORTANTE! Para que la consulta sin dimensiones funcione se ha modificado la gapi.class
+		/**
+		 * IMPORTANTE! Para que la consulta sin dimensiones funcione se ha modificado la gapi.class con el hack
+		 * @url https://code.google.com/p/gapi-google-analytics-php-interface/issues/detail?id=13#c4
+		 */
 		$ga->requestReportData(GA_PROFILE_ID, null, array('pageviews'), null, "pagePath =~ /$page/.*", GA_DATE_FROM, date('Y-m-d'));
 		$ga_results = $ga->getResults();
 		$metrics = $ga_results[0]->getMetrics();
