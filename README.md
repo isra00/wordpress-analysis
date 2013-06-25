@@ -1,5 +1,4 @@
-Analyze the impact of your Wordpress blog
-=========================================
+## Analyze the impact of your Wordpress blog ##
 
 This script shows some numbers about the social impact of your Wordpress posts:
 
