@@ -44,6 +44,24 @@ $twitter = new TwitterAPIExchange(array(
 	'consumer_secret'			=> TWITTER_CONSUMER_SECRET
 ));
 
+/**
+ * Keep the max of each values
+ *
+ * @param array $maxes Current maxes
+ * @param array $scores Scores to compare with $maxes
+ * @return array Updated $maxes
+ */
+function recalculate_maxes($maxes, $scores)
+{
+  foreach ($scores as $key=>$score)
+  {
+    $maxes[$key] = max($maxes[$key] ? : 0, $score);
+  }
+  
+  return $maxes;
+}
+
+
 /*************************************************** API FUNCTIONS ****************************************************/
 
 /**
@@ -133,10 +151,6 @@ SQL;
 $res = mysql_query($sql);
 
 $posts = array();
-$fb_shares_max = 0;
-$plusone_max = 0;
-$pageviews_max = 0;
-$twitter_max = 0;
 while ($row = mysql_fetch_assoc($res))
 {
 	$social = array();
@@ -156,10 +170,7 @@ while ($row = mysql_fetch_assoc($res))
 	
 	$posts[] = array_merge($row, $social );
 	
-	$fb_shares_max = max($social['fb_shares'], $fb_shares_max);
-	$plusone_max = max($social['plusone'], $plusone_max);
-	$pageviews_max = max($social['pageviews'], $pageviews_max);
-	$twitter_max = max($social['twitter'], $twitter_max);
+	$maxes = recalculate_maxes($maxes, $social);
 }
 
 ?>
@@ -171,7 +182,6 @@ while ($row = mysql_fetch_assoc($res))
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <META name="robots" content="NOINDEX, NOFOLLOW">
   <title>Análisis de posts</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
@@ -205,19 +215,19 @@ while ($row = mysql_fetch_assoc($res))
     <td><a href="<?php echo WORDPRESS_HOME ?><?php echo $p['post_name'] ?>"><?php echo utf8_encode($p['post_title']) ?></a></a></td>
     <td>
       <span class="meter-value"><?php echo intval($p['pageviews']) ?></span>
-      <meter min="0" max="<?php echo $pageviews_max ?>" value="<?php echo intval($p['pageviews']) ?>"></meter>
+      <meter min="0" max="<?php echo $maxes['pageviews'] ?>" value="<?php echo intval($p['pageviews']) ?>"></meter>
     </td>
     <td>
       <span class="meter-value"><?php echo intval($p['fb_shares']) ?></span>
-      <meter min="0" max="<?php echo $fb_shares_max ?>" value="<?php echo intval($p['fb_shares']) ?>"></meter>
+      <meter min="0" max="<?php echo $maxes['fb_shares'] ?>" value="<?php echo intval($p['fb_shares']) ?>"></meter>
     </td>
     <td>
       <span class="meter-value"><?php echo intval($p['plusone']) ?></span>
-      <meter min="0" max="<?php echo $plusone_max ?>" value="<?php echo intval($p['plusone']) ?>"></meter>
+      <meter min="0" max="<?php echo $maxes['plusone'] ?>" value="<?php echo intval($p['plusone']) ?>"></meter>
     </td>
     <td>
       <span class="meter-value"><?php echo intval($p['twitter']) ?></span>
-      <meter min="0" max="<?php echo $twitter_max ?>" value="<?php echo intval($p['twitter']) ?>"></meter>
+      <meter min="0" max="<?php echo $maxes['twitter'] ?>" value="<?php echo intval($p['twitter']) ?>"></meter>
     </td>
     <td>
       <span class="meter-value"><?php echo intval($p['comment_count']) ?></span>
