@@ -156,10 +156,10 @@ while ($row = mysql_fetch_assoc($res))
 	
 	$posts[] = array_merge($row, $social );
 	
-	$fb_shares_max = $social['fb_shares'] > $fb_shares_max ? $social['fb_shares'] : $fb_shares_max;
-	$plusone_max = $social['plusone'] > $plusone_max ? $social['plusone'] : $plusone_max;
-	$pageviews_max = $social['pageviews'] > $pageviews_max ? $social['pageviews'] : $pageviews_max;
-	$twitter_max = $social['twitter'] > $twitter_max ? $social['twitter'] : $twitter_max;
+	$fb_shares_max = max($social['fb_shares'], $fb_shares_max);
+	$plusone_max = max($social['plusone'], $plusone_max);
+	$pageviews_max = max($social['pageviews'], $pageviews_max);
+	$twitter_max = max($social['twitter'], $twitter_max);
 }
 
 ?>
@@ -171,6 +171,7 @@ while ($row = mysql_fetch_assoc($res))
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <META name="robots" content="NOINDEX, NOFOLLOW">
   <title>Análisis de posts</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
