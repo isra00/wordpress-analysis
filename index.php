@@ -140,12 +140,12 @@ $twitter_max = 0;
 while ($row = mysql_fetch_assoc($res))
 {
 	$social = array();
-	$absolute_url = WORDPRESS_HOME . $row['post_name'];
+	$absolute_url = WORDPRESS_HOME . $row['post_name'] . '/';
 	
 	$fb_json = json_decode(cached_file_get_contents("http://graph.facebook.com/$absolute_url"));
 	$social['fb_shares'] = isset($fb_json->shares) ? $fb_json->shares : 0;
 	
-	$plusone_html = cached_file_get_contents('https://plusone.google.com/_/+1/fastbutton?url=' . urlencode($absolute_url . '/'));
+	$plusone_html = cached_file_get_contents('https://plusone.google.com/_/+1/fastbutton?url=' . urlencode($absolute_url));
 	$match = array();
 	preg_match('/\<div id=\"aggregateCount\" class=\"V1\"\>([0-9]+)\<\/div\>/', str_replace("\n", '', $plusone_html), $match);
 	$social['plusone'] = isset($match[1]) ? $match[1] : '?';
