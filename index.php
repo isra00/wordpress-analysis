@@ -55,7 +55,7 @@ function recalculate_maxes($maxes, $scores)
 {
   foreach ($scores as $key=>$score)
   {
-    $maxes[$key] = max($maxes[$key] ? : 0, $score);
+    $maxes[$key] = max(isset($maxes[$key]) ? $maxes[$key] : 0, $score);
   }
   
   return $maxes;
@@ -151,6 +151,7 @@ SQL;
 $res = mysql_query($sql);
 
 $posts = array();
+$maxes = array();
 while ($row = mysql_fetch_assoc($res))
 {
 	$social = array();
